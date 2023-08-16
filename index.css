@@ -1,0 +1,85 @@
+/* @import url(small.css) (min-width:0px);
+@import url(large.css) (min-width:900px); */
+
+:root {
+  --main-bg-color: rgb(35, 35, 35);
+  --main-text-color: rgb(255 255 255);
+  --alt-bg-color: rgb(223 223 223);
+}
+
+html {
+  display: block;
+  width: 100%;
+}
+
+body {
+  background-color: rgb(35, 35, 35);
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  color: #f9faffde;
+  text-shadow: #858ebc -2px 2px 8px;
+}
+
+#container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background: transparent;
+  font-size: 48px;
+  cursor: pointer;
+  margin-bottom: 24px;
+  color: #a0a0a0;
+  text-shadow: #858ebc -2px 2px 8px;
+}
+
+button:hover {
+  color: #f9faffde;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td {
+  border: 3px solid #333;
+  width: 72px;
+  height: 72px;
+  font-size: 36px;
+  text-align: center;
+  vertical-align: top;
+}
+
+td input {
+  max-width: 36px;
+  max-height: inherit;
+  padding: none;
+  border: none;
+  background-color: transparent;
+}
+
+td, td input, a {
+  vertical-align: middle;
+  color: #f9faffde;
+  text-shadow: #858ebc -2px 2px 8px;
+  font-size: 36px;
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+td input:focus {
+  outline: none;
+}
+
+td input.red {
+  color: #df1d48;
+  text-shadow: #61636e -2px 2px 8px;
+}
