@@ -5,11 +5,10 @@ window.addEventListener("load", () => {
   let debounce = 0;
 
   function debounceDisplay(letter, i, j) {
-    if (!letter) return;
     setTimeout(() => {
       const td = document.getElementById(`${i}-${j}`);
-      if (td) td.innerHTML = letter;
-    }, debounce+=112);
+      if (td) td.innerHTML = letter ? letter : "";
+    }, debounce+=25);
   }
 
   function solve(grid, r, c) {
@@ -26,7 +25,9 @@ window.addEventListener("load", () => {
           grid[r] = match;
           debounceDisplay(grid[r][c], r, c);
           let res = solve(grid, r, c+1);
-          if (res) return res;
+          if (res) {
+            return res;
+          } else debounceDisplay(null, r, c+1);
         }
       }
     } else if (colStr && dictionary[colStr]) {
@@ -35,7 +36,9 @@ window.addEventListener("load", () => {
         grid[r] = match.length >= r ? match[r] : "";
         debounceDisplay(grid[r], r, c);
         let res = solve(grid, r, c+1);
-        if (res) return res;
+        if (res) {
+          return res;
+        } else debounceDisplay(null, r, c+1);
       }
     }
     return null;
