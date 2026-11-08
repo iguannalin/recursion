@@ -1,7 +1,7 @@
 window.addEventListener("load", () => {
   let dictionary = {};
-  let phrases = [];
-  let tried = [];
+  // the only chengyu (from http://thuocl.thunlp.org/) that start a full grid -- found by running solve() on all 8061
+  const phrases = ["千千万万","堂堂正正","血雨腥风","镜花水月","零零星星","腥风血雨","卧虎藏龙","战战兢兢","妙笔生花","洞天福地","剑胆琴心","梦笔生花","琴心剑胆","水月镜花"];
   let debounce = 0;
 
   function debounceDisplay(letter, i, j) {
@@ -55,8 +55,7 @@ window.addEventListener("load", () => {
   }
 
   function getPuzzle() {
-    let starter = "";
-    while (!starter || tried.includes(starter) || starter.length < 4) starter = getRandomWord();
+    const starter = getRandomWord();
     starter.split("").forEach((letter, index) => {debounceDisplay(letter, 0, index);})
     return solve([starter,"","",""], 1, 0);
   }
@@ -76,28 +75,19 @@ window.addEventListener("load", () => {
     }
   }
   
-  // amazing chengyu data source -- http://thuocl.thunlp.org/
-  fetch("https://annaylin.com/100-days/chengyu/THUOCL_chengyu.txt").then((f) => f.text()).then((r) => {
-    phrases = r.split(",");
+  fetch("https://annaylin.com/100-days/daisy/dictionary.json").then((f) => f.json()).then((r) => {
+    dictionary = r;
+    initGrid();
+    let count = 0; // for the really bad luck
+    let puzzle = getPuzzle();
+    while ((!puzzle || puzzle[3]?.length < 4) && count < phrases.length) {
+      puzzle = getPuzzle();
+      count++;
+    }
+    if (puzzle) {
+      // setTimeout(displayGrid(puzzle), debounce += 10);
+      console.log(debounce);
+    }
+    console.log("Solved: ", puzzle, count);
   });
-
-  fetch(`https://seasons986.pythonanywhere.com/check`).then((r) => r.json().then((res) => {
-    tried = res;
-    fetch("https://annaylin.com/100-days/daisy/dictionary.json").then((f) => f.json()).then((r) => {
-      dictionary = r;
-      initGrid();
-      let count = 0; // for the really bad luck
-      let puzzle = getPuzzle();
-      while ((!puzzle || puzzle[3]?.length < 4) && count < phrases.length) {
-        starterFailed = true;
-        puzzle = getPuzzle();
-        count++;
-      }
-      if (puzzle) {
-        // setTimeout(displayGrid(puzzle), debounce += 10);
-        console.log(debounce);
-      }
-      console.log("Solved: ", puzzle, count);
-    });
-  }));
 });
